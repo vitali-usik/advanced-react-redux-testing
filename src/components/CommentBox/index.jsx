@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import * as actions from './../../actions';
 
 class CommentBox extends Component {
   state = {
@@ -14,7 +17,8 @@ class CommentBox extends Component {
   submitComment = (evt) => {
     evt.preventDefault();
 
-    console.log(this.state.comment);
+    this.props.saveComment(this.state.comment);
+
     this.setState({
       comment: ''
     });
@@ -22,18 +26,25 @@ class CommentBox extends Component {
 
   render() {
     return (
-      <form onSubmit={this.submitComment}>
-        <h4>Add a Comment</h4>
-        <textarea
-          onChange={this.handleChange}
-          value={this.state.comment}
-        />
-        <div>
-          <button type="submit">Submit Comment</button>
-        </div>
-      </form>
+      <div>
+        <form onSubmit={this.submitComment}>
+            <h4>Add a Comment</h4>
+          <textarea
+            onChange={this.handleChange}
+            value={this.state.comment}
+          />
+          <div>
+            <button type="submit">Submit Comment</button>
+          </div>
+        </form>
+        <button onClick={this.props.fetchComments}>Fetch Comments</button>
+      </div>
     );
   }
 }
 
-export default CommentBox;
+// const mapDispatchToProps = (dispatch) => ({
+
+// });
+
+export default connect(null, actions)(CommentBox);
