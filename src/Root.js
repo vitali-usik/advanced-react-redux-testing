@@ -1,12 +1,15 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
-import reduxPromise from 'redux-promise';
+// import reduxPromise from 'redux-promise';
+
+import async from './middlewares/async';
+import stateValidator from './middlewares/stateValidator';
 
 import reducers from './reducers';
 
 const getEnhancers = () => {
-  const middleware = applyMiddleware(reduxPromise);
+  const middleware = applyMiddleware(async, stateValidator);
   let composeEnhancers = (e) => e;
 
   if (process.env.NODE_ENV === 'development') {
